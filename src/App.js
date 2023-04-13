@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React,{useState} from 'react';
+import Home from './pages/home/Home';
+import AddNote from './pages/Write/AddNote';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import {
+  createBrowserRouter,
+  RouterProvider
+} from "react-router-dom"
+
+
+export default function App(){
+    const [currData,setCurrData] = useState(JSON.parse(localStorage.getItem("userData")))
+    let paths = [
+    {
+      path: "/",
+      element: <Home currData={currData} setCurrData={setCurrData}/>,
+      errorElement:<div>Not found</div>
+    },
+    {
+        path: "/addNote",
+        element: <AddNote currData={currData} setCurrData={setCurrData} />,
+    }
+    ]
+    const router = createBrowserRouter(paths);
+    return <RouterProvider router={router}/>
 }
 
-export default App;
